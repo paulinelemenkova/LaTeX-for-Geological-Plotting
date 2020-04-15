@@ -1,0 +1,103 @@
+\documentclass{article} %  say
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+\usepackage[T2A]{fontenc}
+\usepackage{CJKutf8}
+
+
+\usepackage{tikz}
+\usetikzlibrary{chains}
+\usepackage{pgfplots}
+\usepackage{pgfmath}
+\usetikzlibrary{matrix}
+\usetikzlibrary{arrows,decorations.pathmorphing,backgrounds,positioning,fit,petri}
+\usepgfmodule{decorations}
+\usepgflibrary{decorations.shapes} 
+\usetikzlibrary[decorations.shapes] 
+\usetikzlibrary{mindmap}
+\usepgflibrary{patterns}
+\usetikzlibrary[patterns]
+\usetikzlibrary{petri}
+\usepgflibrary{plothandlers}
+\usetikzlibrary{plothandlers}
+\usepackage{pgfpages}
+\usepgflibrary{arrows}
+\usetikzlibrary{arrows}
+\usetikzlibrary{trees}
+\usetikzlibrary{topaths}
+\usetikzlibrary{positioning}
+\usetikzlibrary{fit}
+\usepgflibrary{shapes.misc}
+\usetikzlibrary{shapes.misc}
+\usetikzlibrary{spy}
+\usepgflibrary{shadings}
+\usetikzlibrary{shadings}
+\usepgfmodule{shapes}
+\usepgfplotslibrary{external}
+\usetikzlibrary{pgfplots.external}
+\usepgfplotslibrary{colorbrewer}
+\usepgfplotslibrary{patchplots}
+\usetikzlibrary{plotmarks}
+
+
+
+\definecolor{babypink}{rgb}{0.96, 0.76, 0.76}
+\definecolor{celadon}{rgb}{0.67, 0.88, 0.69}
+\definecolor{chromeyellow}{rgb}{1.0, 0.65, 0.0}
+\definecolor{cream}{rgb}{1.0, 0.99, 0.82}
+\definecolor{darksalmon}{rgb}{0.91, 0.59, 0.48}
+\definecolor{lavenderblue}{rgb}{0.8, 0.8, 1.0}
+ \definecolor{lightapricot}{rgb}{0.99, 0.84, 0.69}
+ \definecolor{lightgreen}{rgb}{0.56, 0.93, 0.56}
+ \definecolor{lightpink}{rgb}{1.0, 0.71, 0.76}
+ \definecolor{mauve}{rgb}{0.88, 0.69, 1.0}
+ \definecolor{outrageousorange}{rgb}{1.0, 0.43, 0.29}
+ \definecolor{tangerineyellow}{rgb}{1.0, 0.8, 0.0}
+ \definecolor{turquoiseblue}{rgb}{0.0, 1.0, 0.94}
+
+
+\pgfpagesuselayout{resize to}[a4paper,border shrink=5mm]
+%\pgfpagesuselayout{2 on 1}[a4paper,border shrink=5mm]
+
+\begin{document}
+%\selectlanguage{russian}{
+\begin{tikzpicture}
+  \path[mindmap,concept color=lavenderblue,text=black]
+    node[concept] {Результаты}  [clockwise from=0]
+       child[concept color=turquoiseblue] { node[concept] {6. Выводы} 
+          [clockwise from=60]
+              	child { node[concept] {Сравнительный анализ свойств разнотипных грунтов} }
+	        	child { node[concept] {Выбор алгоритмов} }
+      		child { node[concept] {Отбор и подготовка образцов} }  }  
+      child[concept color=tangerineyellow] {
+      node[concept] {5. Анализ данных}
+      [clockwise from=0]
+  	    child { node[concept] {Численные расчеты} }
+   	   child { node[concept] {Построение графиков} }
+   	   child { node[concept] {Статистическая обработка} } } 
+    child[concept color=outrageousorange] {
+      node[concept] {4.Эксперимент}
+      [clockwise from=-60]
+	      child { node[concept] {Снятие показаний} }
+	      child { node[concept] {Нагружение образцов, испытания} }
+ 	     child { node[concept] {Подготовка образцов и приборов} } }
+    child[concept color=mauve] { 
+    node[concept] {3. Методы}
+      [clockwise from=-120]
+      child { node[concept] {Одноосное сжатие} }
+      child { node[concept] {Компрессионное сжатие} }
+      	child { node[concept] {Шариковый штамп} }  }
+       child[concept color=lightgreen] { node[concept] {2. Первичная обработка данных} 
+          [clockwise from=-180]
+              	child { node[concept] {Выбор алгоритмов} }
+	         child { node[concept] {Архивация файлов} }
+      		child { node[concept] {Отбор и подготовка образцов} }  }    
+     child[concept color=lightpink] { node[concept] {1. Получение данных}
+          [clockwise from=-240]
+      		child { node[concept] {Полевые работы, п-ов Ямал} }
+      		child { node[concept] {Оценка геол. строения местности} }
+      		child { node[concept] {Постановка задачи, техзадание} } };
+\end{tikzpicture}}
+ 
+ 
+\end{document}
