@@ -1,0 +1,290 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Document Setup %%%%%%%%%%%%%%%%%%
+\documentclass[10pt]{article}
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+\usepackage{CJKutf8}
+\AtBeginDvi{\input{zhwinfonts}}
+%\usepackage{polyglossia}
+\makeatletter
+\newlength{\bibhang}
+\setlength{\bibhang}{1em}
+\newlength{\bibsep}
+ {\@listi \global\bibsep\itemsep \global\advance\bibsep by\parsep}
+%\newenvironment{bibsection}%
+ %       {\vspace{-\baselineskip}\begin{list}{}{%
+   %    \setlength{\leftmargin}{\bibhang}%
+     %  \setlength{\itemindent}{-\leftmargin}%
+       %\setlength{\itemsep}{\bibsep}%
+       %\setlength{\parsep}{\z@}%
+        %\setlength{\partopsep}{0pt}%
+        %\setlength{\topsep}{0pt}}}
+        %{\end{list}\vspace{-.6\baselineskip}}
+\makeatother
+\reversemarginpar
+\usepackage{geometry}\geometry{a4paper,total={170mm,257mm},left=1.18in,right=1.18in,top=0.79in,bottom=0.79in}
+%\usepackage[paper=letterpaper,
+           %\includefoot, % Uncomment to put page number above margin
+   %         marginparwidth=0.6in, % Length of section titles
+         %   marginparsep=0.05in, % Space between titles and text
+      %      margin=1.18in, % 1 inch margins
+            %includemp]{geometry}
+%\usepackage{eurosans}
+\setlength{\parindent}{0in}
+\usepackage{enumerate} 
+\usepackage{etaremune}
+\usepackage{calc}
+\usepackage{bbding}
+\usepackage{paralist}
+\usepackage{fancyhdr,lastpage}
+\pagestyle{fancy}
+%\pagestyle{empty} % Uncomment this to get rid of page numbers
+\fancyhf{}\renewcommand{\headrulewidth}{0pt}
+\fancyfootoffset{\marginparsep+\marginparwidth}
+\newlength{\footpageshift}
+\setlength{\footpageshift}
+          {0.5\textwidth+1.\marginparsep+0.5\marginparwidth-2in}
+\lfoot{\hspace{\footpageshift}%
+       \parbox{4in}{\, \hfill %
+                    \arabic{page} of \protect\pageref*{LastPage} % +LP
+% \arabic{page} % -LP
+                    \hfill \,}}
+\usepackage{color,hyperref}
+\usepackage{graphics}
+\usepackage{wrapfig}
+\usepackage{longtable}
+\usepackage[usenames,dvipsnames]{xcolor}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.3}
+\definecolor{mygreen}{RGB}{44,204,148}
+\definecolor{darkgreen}{RGB}{13,107,27}
+\definecolor{lightgreen}{RGB}{0,170,37}
+\definecolor{provinces}{RGB}{11,100,132}
+\definecolor{mypurple}{RGB}{77,24,137}
+\definecolor{haiyan}{RGB}{8,150,178}
+\definecolor{anticred}{RGB}{165,62,11}
+\hypersetup{colorlinks,breaklinks,
+            linkcolor=darkblue,urlcolor=darkblue,
+            anchorcolor=darkblue,citecolor=darkblue}
+%%%%%%%%%%%%%%%%%%%%%%%% End Document Setup %%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Helper Commands %%%%%%%%%
+
+\newcommand{\makeheading}[1]%
+        {\hspace*{-\marginparsep minus \marginparwidth}%
+         \begin{minipage}[t]{\textwidth+\marginparwidth+\marginparsep}%
+                {\large \bfseries #1}\\[-0.15\baselineskip]%
+                 \rule{\columnwidth}{1pt}%
+         \end{minipage}}
+\renewcommand{\section}[2]%
+        {\pagebreak[2]\vspace{1.3\baselineskip}%
+         \phantomsection\addcontentsline{toc}{section}{#1}%
+         \hspace{0in}%
+         \marginpar{
+         \raggedright \scshape #1}#2}
+% An itemize-style list with lots of space between items
+\newenvironment{outerlist}[1][\enskip\textbullet]%
+        {\begin{itemize}[#1]}{\end{itemize}%
+         \vspace{-.6\baselineskip}}
+% An environment IDENTICAL to outerlist that has better pre-list spacing
+% when used as the first thing in a \section
+\newenvironment{lonelist}[1][\enskip\textbullet]%
+        {\vspace{-\baselineskip}\begin{list}{#1}{%
+        \setlength{\partopsep}{0pt}%
+        \setlength{\topsep}{0pt}}}
+        {\end{list}\vspace{-.6\baselineskip}}
+
+% An itemize-style list with little space between items
+\newenvironment{innerlist}[1][\enskip\textbullet]%
+        {\begin{compactitem}[#1]}{\end{compactitem}}
+% An environment IDENTICAL to innerlist that has better pre-list spacing
+% when used as the first thing in a \section
+\newenvironment{loneinnerlist}[1][\enskip\textbullet]%
+        {\vspace{-\baselineskip}\begin{compactitem}[#1]}
+        {\end{compactitem}\vspace{-.6\baselineskip}}
+% To add some paragraph space between lines.
+% This also tells LaTeX to preferably break a page on one of these gaps
+% if there is a needed pagebreak nearby.
+\newcommand{\blankline}{\quad\pagebreak[2]}
+% Uses hyperref to link DOI
+\newcommand\doilink[1]{\href{http://dx.doi.org/#1}{#1}}
+\newcommand\doi[1]{doi:\doilink{#1}}
+% For \url{SOME_URL}, links SOME_URL to the url SOME_URL
+\providecommand*\url[1]{\href{#1}{#1}}
+% Same as above, but pretty-prints SOME_URL in teletype fixed-width font
+\renewcommand*\url[1]{\href{#1}{\texttt{#1}}}
+
+\include{tikz-3dplot}
+\usepackage{tikz,tikz-3dplot}
+\usepackage{amssymb}
+\usepackage{xifthen}
+\usepackage{pstricks,pst-solides3d}
+\usetikzlibrary{chains}
+\usepackage{pgfplots}
+\pgfplotsset{
+compat=1.16,
+    compat/path replacement=1.5.1,
+}
+\usepackage{pgfmath}
+\usetikzlibrary{matrix}
+\usetikzlibrary{arrows,decorations.pathmorphing,backgrounds,positioning,fit,petri}
+\usepgfmodule{decorations}
+\usepgflibrary{decorations.shapes} 
+\usetikzlibrary[decorations.shapes] 
+\usetikzlibrary{mindmap}
+\usepgflibrary{patterns}
+\usetikzlibrary[patterns]
+\usetikzlibrary{petri}
+\usepgflibrary{plothandlers}
+\usetikzlibrary{plothandlers}
+\usepackage{pgfpages}
+\usepgflibrary{arrows}
+\usetikzlibrary{arrows}
+\usetikzlibrary{trees}
+\usetikzlibrary{topaths}
+\usetikzlibrary{3d}
+\usetikzlibrary{positioning}
+\usetikzlibrary{fit}
+\usepgflibrary{shapes.misc}
+\usetikzlibrary{shapes.misc}
+\usepgflibrary{shadings}
+\usetikzlibrary{shadings}
+\usepgfmodule{shapes}
+\usepgfplotslibrary{external}
+\usetikzlibrary{pgfplots.external}
+\usepgfplotslibrary{colorbrewer}
+\usepgfplotslibrary{patchplots}
+\usetikzlibrary{plotmarks}
+\usepackage{color} 
+\usepackage{xcolor} 
+%\pgfpagesuselayout{resize to}[a4paper,border shrink=20mm]
+\pgfplotsset{colormap={cool}{rgb255(0cm)=(255,255,255); rgb255(1cm)=(0,128,255); rgb255(2cm)=(255,0,255)}}
+  \pgfplotsset{colormap={violet}{rgb255=(25,25,122) color=(white) rgb255=(238,140,238)}}
+  \pgfplotsset{  colormap={bluered}{rgb255(0cm)=(0,0,180); rgb255(1cm)=(0,255,255); rgb255(2cm)=(100,255,0);rgb255(3cm)=(255,255,0); rgb255(4cm)=(255,0,0); rgb255(5cm)=(128,0,0)}}
+ \pgfplotsset{/pgfplots/colormap={winter}{rgb255=(0,0,255) rgb255=(0,255,128)}}
+ \pgfplotsset{/pgfplots/colormap={spring}{rgb255=(255,0,255) rgb255=(255,255,0)}}
+ \pgfplotsset{colormap={CM}{rgb=(0,0,1) color=(black) rgb255=(238,140,238)}}
+ 
+\usetikzlibrary{spy}
+ \pgfplotsset{every patch/.style={miter limit=50},}
+\usepgfplotslibrary{colormaps}
+
+
+\newcommand*\subfigheight{\linewidth}
+\newcommand*\subfigwidth{\linewidth}
+
+\begin{document}
+\selectlanguage{russian}
+
+\begin{tikzpicture} [spy using outlines={red,circle,magnification=1.5, size=3cm},connect spies]
+  \begin{axis}[colorbar sampled line,small,title=Experiment №5807,view={240}{30},xlabel={\tiny{Time, h}},
+    ylabel={\tiny{Immersion depth, mm}}, zlabel={\tiny{($C_{eq}$), MPa}}, xlabel style={sloped like x axis},
+    ylabel style={sloped},grid=major,minor x tick num=10,minor y tick num=10,
+    colormap/PuOr,]
+    
+    \addplot3+ [line join=round,miter limit=50,line join=bevel][
+only marks, scatter,  ]
+coordinates {
+(0,0.50,0.160) (30,0.85,0.075) (60,0.92,0.072) (90,1.05,0.069) (120,1.10,0.066) (150	,1.11,0.064) (180,1.13,0.062) (210,1.15,0.059) (240,1.18,0.057) (270,1.20,0.055)
+(0,0.30,0.17) (1.0,0.35,0.165) (1.5,0.37,0.16) (2,0.40,0.155) (3,0.42,0.15) (4,0.45,0.14) (5,0.5,0.13) (6,0.55,0.12) (7,0.57,0.11) (8,0.60,0.10)
+(0,0.370,0.22) (1,0.375,0.21) (3,0.380,0.20) (4,0.390,0.19) (5,0.395,0.18) (6,0.400,0.17) (8,0.405,0.16) (10,0.410,0.15) (13,0.415,0.155) (15,0.420,0.14) 
+(0,0.320,0.170) (0.5,0.380,0.165) (1.0,0.390,0.160) (1.5,0.400,0.155) (2,0.420,0.150) (2.5,0.440,0.140) (3,0.460,0.135) (3.5,0.480,0.127) (4,0.500,0.123) (5,0.520,0.114) 
+(0,0.315,0.180) (1,0.324,0.163) (3,0.332,0.162) (4,0.408,0.158) (5,0.417,0.151) (6,0.442,0.142) (8,0.458,0.141) (10,0.473	,0.138) (13,0.502,0.136) (15,0.523,0.135) 
+(0,0.372,0.21) (1,0.373,0.20) (3,0.382,0.19) (4,0.393,0.18) (5,0.393,0.17) (6,0.402,0.15) (8,0.407,0.14) (10,0.411,0.12) (13,0.417,0.11) (15,0.421,0.10) 
+};
+	\coordinate (spypoint) at (4,0.5,0.16);
+        \coordinate (magnifyglass) at (200,1.0,0.18);
+\end{axis}
+	\spy on (spypoint) in node at (magnifyglass);
+\end{tikzpicture}
+	\hskip 10pt 	
+	\begin{tikzpicture} [spy using outlines={red,rectangle,magnification=1.3, size=3.3cm},connect spies]
+	\begin{axis}[colorbar sampled line,small,title=Experiment №5817,xlabel={\tiny{Time, h}},
+    ylabel={\tiny{Immersion depth, mm}}, zlabel={\tiny{($C_{eq}$) , MPa}}, xlabel style={sloped like x axis},
+    ylabel style={sloped},colormap name=hot,grid=major,view={240}{30},minor x tick num=10,minor y tick num=10]
+    \addplot3+ [mesh,scatter,
+        samples=42,domain=0:1, ] coordinates {
+(0,0.50,0.150) (30,0.80,0.080) (60,0.85,0.075) (90,0.96,0.063) (120,1.00,0.062) (150,1.15,0.061) (180,1.25,0.060) (210,1.52,0.059) (240,1.80,0.058)    
+(0,0.61,0.120) (2,0.66,0.110) (4,0.68,0.103) (6,0.72,0.090) (7,0.76,0.087) (8,0.78,0.083) (10,0.82,0.081) (13,0.83,0.075) (15,0.84,0.070)  
+(0,0.82,0.080) (1,0.84,0.078) (2,0.86,0.074) (3,0.91,0.072) (4,0.94,0.070) (5,0.99,0.066) (6,1.13,0.064) (7,1.20,0.062) (8,1.32,0.060)  
+(0,0.42,0.150) (1,0.44,0.147) (2,0.47,0.143) (3,0.52,0.132) (4,0.55,0.121) (5,0.58,0.116) (6,0.60,0.105) (7,0.62,0.099) (8,0.64,0.092)  
+(0,0.40,0.111) (2,0.47,0.105) (4,0.52,0.101) (6,0.55,0.096) (8,0.61,0.092) (10,0.64,0.087) (12,0.71,0.085) (13,0.75,0.084) (15,0.81,0.082)  
+(0,0.62,0.110) (2,0.66,0.103) (4,0.68,0.098) (6,0.71,0.094) (8,0.74,0.087) (10,0.76,0.085) (12,0.77,0.083) (13,0.78,0.081) (15,0.79,0.078)     
+};
+	\coordinate (spypoint) at (50,0.5,0.09);
+        \coordinate (magnifyglass) at (200,1.5,0.12);
+\end{axis}
+\spy on (spypoint) in node at (magnifyglass);
+\end{tikzpicture}\\
+
+
+	\hskip 10pt % insert a non-breaking space of specified width.
+	\begin{tikzpicture} \begin{axis}[colorbar sampled line,small,title=Experiment №5821,xlabel={\tiny{Time, h}},
+    ylabel={\tiny{Immersion depth, mm}}, zlabel={\tiny{($C_{eq}$), MPa}},xlabel style={sloped like x axis},
+    ylabel style={sloped},colormap/PRGn,grid=major,view={210}{30},minor x tick num=10,minor y tick num=10]
+    \addplot3+ [mesh,scatter,
+        samples=42,domain=0:1, ] coordinates {
+ (0,0.30,0.220) (30,0.52,0.140) (60,0.58,0.120) (90,0.60,0.110) (120,0.61,0.108) (150,0.62,0.100) (180,0.63,0.095) (210,0.64,0.090)   
+ (0,0.32,0.217) (2,0.35,0.203) (3,0.41,0.196) (4,0.44,0.174) (5,0.46,0.156) (6,0.48,0.142) (7,0.53,0.136) (8	,0.57,0.125)   
+ (0,0.51,0.153) (2,0.54,0.126) (3,0.57,0.112) (4,0.59,0.103) (5,0.61,0.096) (6,0.63,0.091) (7,0.64,0.089) (8,0.66,0.088)   
+ (0,0.50,0.154) (3,0.55,0.125) (4,0.58,0.109) (5,0.60,0.102) (6,0.62,0.099) (8,0.64,0.097) (10,0.66,0.096) (12,0.68,0.095)   
+ (0,0.51,0.178) (3,0.53,0.171) (4,0.57,0.166) (5,0.59,0.152) (6,0.61,0.143) (8,0.63,0.136) (10,0.65,0.130) (12,0.67,0.127)   
+ (0,0.38,0.173) (3,0.41,0.169) (4,0.42,0.165) (5,0.44,0.151) (6,0.46,0.142) (8,0.48,0.137) (10,0.50,0.135) (12,0.52,0.134)   
+};
+\end{axis}
+
+\end{tikzpicture}
+	\hskip 10pt % insert a non-breaking space of specified width.
+	\begin{tikzpicture} \begin{axis}[colorbar sampled line,small,title=Experiment №5828,xlabel={\tiny{Time, h}},
+    ylabel={\tiny{Immersion depth, mm}}, zlabel={\tiny{($C_{eq}$) , MPa}},xlabel style={sloped like x axis},
+    ylabel style={sloped},colormap/cool,grid=major,view={240}{30},minor x tick num=10,minor y tick num=10]
+    \addplot3+ [mesh,scatter,
+        samples=36,domain=0:1, ] coordinates {
+(0,0.40,0.130) (20,0.60,0.110) (40,0.70,0.090) (60,0.90,0.080) (80,1.00,0.075) (100,1.10,0.065)    
+(0,0.35,0.160) (2,0.42,0.140) (4,0.51,0.120) (6,0.53,0.115) (8,0.58,0.110) (10,0.62,0.100) 
+(0,0.65,0.110) (3,0.75,0.095) (8,0.80,0.081) (14,0.85,0.070) (16,0.90,0.064) (18	,1.19,0.050) 
+(0,0.55,0.150) (2,0.62,0.132) (4,0.71,0.113) (6,0.73,0.102) (8,0.78,0.090) (10,0.82,0.080) 
+(0,0.41,0.162) (3,0.53,0.143) (8,0.57,0.121) (14	,0.60,0.115) (16,0.63	,0.104) (18,0.65,0.096) 
+(0,1.11,0.061) (2,1.23,0.048) (4,1.28,0.041) (6,1.32,0.037) (8,1.34,0.031) (10,1.35,0.026)       
+};
+\end{axis}
+\end{tikzpicture}
+\\
+%	\hskip 10pt % insert a non-breaking space of specified width.
+	\begin{tikzpicture} \begin{axis}[colorbar sampled line,small,title=Experiment №5822,xlabel={\tiny{Time, h}},
+    ylabel={\tiny{Immersion depth, mm}}, zlabel={\tiny{($C_{eq}$), MPa}},xlabel style={sloped like x axis},
+    ylabel style={sloped},colormap/RdYlGn,grid=major,view={240}{30},minor x tick num=10,minor y tick num=10]
+    \addplot3+ [mesh,scatter, samples=54,domain=0:1, ] coordinates {
+(0,0.30,0.200) (30,0.61,0.100) (60,0.71,0.080) (90,0.78,0.075) (120,0.80,0.065) (150,0.82,0.050) (180,0.83,0.047) (210,0.85,0.042) (240,0.90,0.040)   
+(0,0.50,0.112) (2,0.61,0.102) (4,0.68,0.084) (6,0.71,0.081) (9,0.73,0.076) (12,0.74,0.067) (13,0.75,0.064) (14,0.76,0.061) (15,0.78,0.053)   
+(0,0.25,0.210) (2,0.26,0.204) (2.5,0.31,0.092) (3.2,0.34,0.083) (3.5,0.35,0.073) (4.0,0.36,0.066) (4.5,0.37,0.061) (4.8,0.38	,0.069) (5,0.41,0.056)   
+(0,0.45,0.150) (2,0.46,0.137) (2.5,0.49,0.129) (3.2,0.51,0.125) (3.5,0.54,0.121) (4.0,0.56,0.115) (4.5,0.58,0.107) (4.8	,0.59	,0.102) (5,0.61,0.097)   
+(0,0.41,0.144) (2,0.42,0.141) (4	,0.43,0.135) (6,0.45,0.131) (9,0.47,0.127) (12,0.50,0.123) (13,0.53,0.122) (14,0.57,0.121) (15,0.58,0.120)   
+(0,0.42,0.141) (2,0.43,0.139) (4	,0.45,0.137) (6,0.47,0.133) (9,0.49,0.125) (12,0.52,0.121) (13,0.55,0.118) (14,0.59,0.116) (15,0.60,0.114)        
+        };
+\end{axis}
+\end{tikzpicture}
+	\hskip 10pt % insert a non-breaking space of specified width.
+	\begin{tikzpicture} [spy using outlines={red,circle,magnification=1.5, size=3cm},connect spies]
+	\begin{axis}[colorbar sampled line,small,title=Experiment №5825,xlabel={\tiny{Time, h}},
+    ylabel={\tiny{Immersion depth, mm}}, zlabel={\tiny{($C_{eq}$), MPa}},xlabel style={sloped like x axis},
+    ylabel style={sloped},colormap/BrBG-11,grid=major,view={240}{30},minor x tick num=10,minor y tick num=10]
+    \addplot3+ [mesh,scatter, samples=54,domain=0:1, ] coordinates {
+(0,0.21,0.300) (20,0.24,0.150) (40,0.27,0.135) (60,0.32,0.130) (80,0.35,0.125) (100,0.38,0.123) (120	,0.39,0.121) (140,0.42,0.120)     
+(0,0.35,0.210) (2,0.37,0.185) (4,0.39,0.163) (6,0.42,0.142) (8,0.45,0.131) (10,0.47,0.119) (12,0.49,0.112) (18,0.52,0.107)   
+(0,0.40,0.157) (2,0.43,0.143) (4,0.47,0.136) (6,0.51,0.128) (8,0.54,0.122) (10,0.57,0.116) (12,0.59,0.107) (18,0.61,0.103)   
+(0,0.51,0.120) (2,0.62,0.112) (3,0.64,0.101) (4,0.69,0.094) (5,0.71,0.081) (6,0.75,0.074) (7,0.77,0.061) (8,0.79,0.050)   
+(0,0.43,0.170) (2,0.46,0.162) (3,0.50,0.151) (4,0.54,0.144) (5,0.57,0.131) (6,0.60,0.124) (7,0.62,0.111) (8,0.64,0.105)   
+(0,0.41,0.158) (2,0.44,0.144) (3,0.49,0.137) (4,0.53,0.129) (5,0.55,0.123) (6,0.58,0.117) (7,0.60,0.108) (8,0.62,0.104)   
+        };
+        	\coordinate (spypoint) at (4,0.6,0.16);
+        \coordinate (magnifyglass) at (160,0.5,0.18);
+\end{axis}
+	\spy on (spypoint) in node at (magnifyglass);
+\end{tikzpicture}
+ 
+
+%	\begin{flushleft}
+%		\selectlanguage{russian}\textbf{Рис. 2. Временные ряды изменения велиhины длительного эквивалентного сцепления грунтов ($C_{eq}$) с увелиhением глубины погружения образцов. Увелиhенный фрагмент графика: 8-hасовое эквивалентное сцепление. Серии испытаний-II (№9-14). 3D-визуализация: \LaTeX{}}\\\vspace{6pt}
+%		\textbf{Fig. 2. Time series analysis of the variations of the long-term equivalent cohesion of soils ($C_{eq}$) under increasing depth of the samples. Enlarged: graphs of the 8-hours equivalent cohesion of soils. Series-II (№9-16). 3D: \LaTeX{}}
+%	\end{flushleft}
+
+\end{document}
