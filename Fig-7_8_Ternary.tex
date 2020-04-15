@@ -1,0 +1,378 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Document Setup %%%%%%%%%%%%%%%%%%
+\documentclass[10pt]{article}
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+\usepackage{CJKutf8}
+\AtBeginDvi{\input{zhwinfonts}}
+%\usepackage{polyglossia}
+\makeatletter
+\newlength{\bibhang}
+\setlength{\bibhang}{1em}
+\newlength{\bibsep}
+ {\@listi \global\bibsep\itemsep \global\advance\bibsep by\parsep}
+\makeatother
+\reversemarginpar
+\usepackage{geometry}\geometry{a4paper,total={170mm,257mm},left=1.18in,right=1.18in,top=0.79in,bottom=0.79in}
+
+\setlength{\parindent}{0in}
+\usepackage{enumerate} 
+\usepackage{etaremune}
+\usepackage{calc}
+\usepackage{bbding}
+\usepackage{paralist}
+\usepackage{fancyhdr,lastpage}
+\pagestyle{fancy}
+%\pagestyle{empty} % Uncomment this to get rid of page numbers
+\fancyhf{}\renewcommand{\headrulewidth}{0pt}
+\fancyfootoffset{\marginparsep+\marginparwidth}
+\newlength{\footpageshift}
+\setlength{\footpageshift}
+          {0.5\textwidth+1.\marginparsep+0.5\marginparwidth-2in}
+\lfoot{\hspace{\footpageshift}%
+       \parbox{4in}{\, \hfill %
+                    \arabic{page} of \protect\pageref*{LastPage} % +LP
+% \arabic{page} % -LP
+                    \hfill \,}}
+\usepackage{color,hyperref}
+\usepackage{graphics}
+\usepackage{wrapfig}
+\usepackage{longtable}
+
+\usepackage[usenames,dvipsnames]{xcolor}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.3}
+\definecolor{mygreen}{RGB}{44,204,148}
+\definecolor{darkgreen}{RGB}{13,107,27}
+\definecolor{lightgreen}{RGB}{0,170,37}
+\definecolor{provinces}{RGB}{11,100,132}
+\definecolor{mypurple}{RGB}{77,24,137}
+\definecolor{haiyan}{RGB}{8,150,178}
+\definecolor{anticred}{RGB}{165,62,11}
+\definecolor{amber}{rgb}{1.0, 0.75, 0.0}
+\definecolor{americanrose}{rgb}{1.0, 0.01, 0.24}
+\definecolor{applegreen}{rgb}{0.55, 0.71, 0.0}
+\definecolor{bananayellow}{rgb}{1.0, 0.88, 0.21}
+\definecolor{beaublue}{rgb}{0.74, 0.83, 0.9}
+\definecolor{bittersweet}{rgb}{1.0, 0.44, 0.37}
+\definecolor{blue-violet}{rgb}{0.54, 0.17, 0.89}
+\definecolor{brilliantlavender}{rgb}{0.96, 0.73, 1.0}
+\definecolor{brilliantrose}{rgb}{1.0, 0.33, 0.64}
+\definecolor{brightturquoise}{rgb}{0.03, 0.91, 0.87}
+
+\hypersetup{colorlinks,breaklinks,
+            linkcolor=darkblue,urlcolor=darkblue,
+            anchorcolor=darkblue,citecolor=darkblue}
+%%%%%%%%%%%%%%%%%%%%%%%% End Document Setup %%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Helper Commands %%%%%%%%%
+
+\newcommand{\makeheading}[1]%
+        {\hspace*{-\marginparsep minus \marginparwidth}%
+         \begin{minipage}[t]{\textwidth+\marginparwidth+\marginparsep}%
+                {\large \bfseries #1}\\[-0.15\baselineskip]%
+                 \rule{\columnwidth}{1pt}%
+         \end{minipage}}
+\renewcommand{\section}[2]%
+        {\pagebreak[2]\vspace{1.3\baselineskip}%
+         \phantomsection\addcontentsline{toc}{section}{#1}%
+         \hspace{0in}%
+         \marginpar{
+         \raggedright \scshape #1}#2}
+\newenvironment{outerlist}[1][\enskip\textbullet]%
+        {\begin{itemize}[#1]}{\end{itemize}%
+         \vspace{-.6\baselineskip}}
+\newenvironment{lonelist}[1][\enskip\textbullet]%
+        {\vspace{-\baselineskip}\begin{list}{#1}{%
+        \setlength{\partopsep}{0pt}%
+        \setlength{\topsep}{0pt}}}
+        {\end{list}\vspace{-.6\baselineskip}}
+\newenvironment{innerlist}[1][\enskip\textbullet]%
+        {\begin{compactitem}[#1]}{\end{compactitem}}
+
+\newenvironment{loneinnerlist}[1][\enskip\textbullet]%
+        {\vspace{-\baselineskip}\begin{compactitem}[#1]}
+        {\end{compactitem}\vspace{-.6\baselineskip}}
+\newcommand{\blankline}{\quad\pagebreak[2]}
+\newcommand\doilink[1]{\href{http://dx.doi.org/#1}{#1}}
+\newcommand\doi[1]{doi:\doilink{#1}}
+\providecommand*\url[1]{\href{#1}{#1}}
+\renewcommand*\url[1]{\href{#1}{\texttt{#1}}}
+
+\usepackage{tikz}
+\usetikzlibrary{chains}
+\usepackage{pgfplots}
+\usepackage{pgfmath}
+\usetikzlibrary{matrix}
+\usetikzlibrary{arrows,decorations.pathmorphing,backgrounds,positioning,fit,petri}
+\usepgfmodule{decorations}
+\usepgflibrary{decorations.shapes} 
+\usetikzlibrary[decorations.shapes] 
+\usetikzlibrary{mindmap}
+\usepgflibrary{patterns}
+\usetikzlibrary[patterns]
+\usetikzlibrary{petri}
+\usepgflibrary{plothandlers}
+\usetikzlibrary{plothandlers}
+\usepackage{pgfpages}
+\usepgflibrary{arrows}
+\usetikzlibrary{arrows}
+\usetikzlibrary{trees}
+\usetikzlibrary{topaths}
+\usetikzlibrary{positioning}
+\usetikzlibrary{fit}
+\usepgflibrary{shapes.misc}
+\usetikzlibrary{shapes.misc}
+\usetikzlibrary{spy}
+\usepgflibrary{shadings}
+\usetikzlibrary{shadings}
+\usepgfmodule{shapes}
+\usepgfplotslibrary{external}
+\usetikzlibrary{pgfplots.external}
+\usepgfplotslibrary{colorbrewer}
+\usepgfplotslibrary{patchplots}
+\usetikzlibrary{plotmarks}
+\usepackage{color} 
+\usepackage{xcolor} 
+%\pgfpagesuselayout{resize to}[a4paper,border shrink=20mm]
+\pgfplotsset{colormap={cool}{rgb255(0cm)=(255,255,255); rgb255(1cm)=(0,128,255); rgb255(2cm)=(255,0,255)}}
+  \pgfplotsset{colormap={violet}{rgb255=(25,25,122) color=(white) rgb255=(238,140,238)}}
+  \pgfplotsset{
+    colormap={bluered}{rgb255(0cm)=(0,0,180); rgb255(1cm)=(0,255,255); rgb255(2cm)=(100,255,0);
+rgb255(3cm)=(255,255,0); rgb255(4cm)=(255,0,0); rgb255(5cm)=(128,0,0)}}
+ \pgfplotsset{/pgfplots/colormap={winter}{rgb255=(0,0,255) rgb255=(0,255,128)}}
+ \pgfplotsset{
+    /pgfplots/colormap={spring}{rgb255=(255,0,255) rgb255=(255,255,0)}}
+\definecolor{bisque}{rgb}{1.0, 0.89, 0.77}
+
+\usepgfplotslibrary{ternary} % <-- use 'ternary' library for plotting triangle diagrams
+\usetikzlibrary{pgfplots.ternary} % <-- we explicitly prescribe that we will use the 'ternary' libraries in the picture environment  
+ 
+\begin{document} % <-- start the document
+\selectlanguage{russian}
+\begin{tikzpicture} [scale=1]% <--  start subplot 1
+\begin{ternaryaxis}% <-- start ternary diagram
+[title={\textbf{Granulometric composition of the soil}. Fractions: dust, clay, sand}, % <-- set up subplot parameters in square brackets
+ legend cell align=left,% <-- align legend column on the left
+ legend pos=outer north east,
+ grid=both, % <--  draw a detailed two-sided grid
+ legend entries={sand, loamy sand, sandy loam, sandy clay loam, sandy clay, clay, clay loam, silty clay, silty clay loam, clay loam, silty clay loam, fine loam, silty clay}, 
+    xlabel=\footnotesize{Clay (<0.002 mm)}, % <-- x axis - Name of fraction: dust. Specify a small font size: \ footnotesize
+    ylabel=\footnotesize{Dust (0.002-0.05 mm)}, % <-- y axis - Name of fraction: clay
+    zlabel=\footnotesize{Sand (0.05-2 mm)},% <-- z axis Name of fraction: sand
+    label style={sloped},% <-- indicate tilt annotations along the axises
+    minor tick num=2] % <-- indicate how many minor ticks are between the major ones on the coordinate grid (in this case, 2).
+    
+   \addplot3 coordinates {  % <-- start series of objects, enter coordinates in ternary mode
+         (0.60,    0.40,    0.00)
+        (0.40,    0.60,    0.00)
+        (0.40,    0.60,    0.20)
+};  \addlegendentry{sandy clay}% <-- add object into legend   
+      \addplot3 coordinates {
+        (0.20,    0.80,    0.80)
+        (0.20,    0.80,    0.60)
+        (0.10,    0.90,    0.50)
+        (0.10,    0.90,    0.40)
+       (0.00,    1.00,    0.50)  
+        (0.00,    1.00,    0.60)       
+        (0.10,    0.90,    0.90)
+ };  \addlegendentry{sandy loam}
+
+   \addplot3 coordinates { 
+         (0.0,    1.00,    0.60) 
+        (0.0,    1.00,    0.80)
+        (0.10,    0.95,    0.95)
+         (0.15,    0.85,    0.85)
+};  \addlegendentry{loamy sand}
+
+   \addplot3 coordinates { 
+      (0.0,    1.00,    1.00) 
+      (0.10,    0.85,    0.95) 
+      (0.00,    1.00,    0.80)
+};  \addlegendentry{sand}
+
+   \addplot3 coordinates { 
+        (1.00,    0.00,    0.00) 
+        (0.60,    0.40,    0.00)        
+        (0.40,    0.60,    0.20)    
+        (0.40,    0.60,    0.40)
+        (0.60,    0.40,    0.40)     
+}; \addlegendentry{clay} 
+  
+     \addplot3 coordinates {  
+        (0.40,    0.60,    0.40)
+        (0.40,    0.60,    0.20)
+        (0.30,    0.70,    0.20)       
+        (0.30,    0.70,    0.40)  
+}; \addlegendentry{clay loam}
+
+     \addplot3 coordinates {  
+     (0.60,    0.40,    0.40)
+     (0.40,    0.60,    0.40)     
+     (0.40,    0.60,    0.60)
+};  \addlegendentry{dusty clay}
+
+     \addplot3 coordinates {  
+      (0.40,    0.60,    0.00)
+      (0.40,    0.60,    0.20)
+      (0.30,    0.70,    0.20)     
+      (0.30,    0.70,    0.00)
+}; \addlegendentry{silty clay loam}
+
+     \addplot3 coordinates {  
+      (0.15,    0.85,    0.00)
+     (0.15,    0.85,    0.15)
+     (0.30,    0.70,    0.20)  
+     (0.30,    0.70,    0.00)   
+};  \addlegendentry{clay dusty loam}
+
+     \addplot3 coordinates {  
+     (0.00,    1.00,    0.0)
+     (0.00,    1.00,    0.25)
+     (0.15,    0.85,    0.15)  
+     (0.15,    0.85,    0.00)    
+     (0.00,    1.00,    0.0)
+};  \addlegendentry{thin loam}
+
+\addplot3 coordinates {  
+     (0.30,    0.70,    0.20)
+     (0.10,    0.90,    0.40)
+      (0.10,    0.90,    0.50)
+     (0.20,    0.80,    0.60)
+      (0.30,    0.70,    0.40)
+}; \addlegendentry{loam}
+
+ \addplot3 coordinates {
+       (0.40,    0.60,    0.60)
+       (0.40,    0.60,    0.40)    
+        (0.30,    0.70,    0.40)           
+        (0.20,    0.80,    0.60)       
+        (0.20,    0.80,    0.80)
+}; \addlegendentry{sandy clay loam}
+
+     \addplot3 coordinates {  
+     (0.10,    0.90,    0.40)
+     (0.30,    0.70,    0.20)
+};  \addlegendentry{dusty loam}
+
+     \addplot3 coordinates {  
+     (0.0,    0.0,    0.25)
+     (0.0,    0.0,    0.5)
+     (0.30,    0.70,    0.20)
+     (0.15,    0.85,    0.15)
+};    
+\node at (axis cs:0.60,0.40,0.2) {\footnotesize{clay}};
+\end{ternaryaxis} % <-- finish ternary diagram
+\end{tikzpicture} % <-- finish 1st subplot
+
+
+	\vskip 10pt %  <-- space between two subplots
+\begin{tikzpicture} [scale=1]
+\begin{ternaryaxis}
+[area style,title={\textbf{Granulometric composition of the soil}. Fractions: dust, clay, sand}, %  <-- area style indicate visualization by colors
+ legend cell align=left,
+ legend pos=outer north east,
+ legend entries={sand, loamy sand, sandy loam, sandy clay loam, sandy clay, clay, clay loam, silty clay, silty clay loam, clay loam, silty clay loam, fine loam, silty clay}, 
+    xlabel=\footnotesize{Clay (<0.002 mm)}, 
+    ylabel=\footnotesize{Dust (0.002-0.05 mm)}, 
+    zlabel=\footnotesize{Sand (0.05-2 mm)},
+    label style={sloped},
+    minor tick num=2] 
+   \addplot3 [fill=beaublue] coordinates {  %  <-- we explicitly indicate colors to paint (default: random colors)
+         (0.60,    0.40,    0.00)
+        (0.40,    0.60,    0.00)
+        (0.40,    0.60,    0.20)
+};  \addlegendentry{sandy clay})   
+      \addplot3 [fill=brilliantrose] coordinates { 
+        (0.20,    0.80,    0.80)
+        (0.20,    0.80,    0.60)
+        (0.10,    0.90,    0.50)
+        (0.10,    0.90,    0.40)
+       (0.00,    1.00,    0.50)  
+        (0.00,    1.00,    0.60)       
+        (0.10,    0.90,    0.90)
+ };  \addlegendentry{sandy loam}
+   \addplot3 [fill=brightturquoise] coordinates { 
+         (0.0,    1.00,    0.60) 
+        (0.0,    1.00,    0.80)
+        (0.10,    0.95,    0.95)
+         (0.15,    0.85,    0.85)
+};  \addlegendentry{loamy sand}
+   \addplot3 [fill=bananayellow] coordinates { 
+        (1.00,    0.00,    0.00) 
+        (0.60,    0.40,    0.00)        
+        (0.40,    0.60,    0.20)    
+        (0.40,    0.60,    0.40)
+        (0.60,    0.40,    0.40)     
+}; \addlegendentry{clay} 
+   \addplot3 coordinates { 
+      (0.0,    1.00,    1.00) 
+      (0.10,    0.85,    0.95) 
+      (0.00,    1.00,    0.80)
+};  \addlegendentry{sand}
+  
+     \addplot3 [fill=blue-violet] coordinates {  
+        (0.40,    0.60,    0.40)
+        (0.40,    0.60,    0.20)
+        (0.30,    0.70,    0.20)       
+        (0.30,    0.70,    0.40)  
+}; \addlegendentry{clay loam}
+
+     \addplot3  [fill=americanrose] coordinates {  
+     (0.60,    0.40,    0.40)
+     (0.40,    0.60,    0.40)     
+     (0.40,    0.60,    0.60)
+};  \addlegendentry{dusty clay}
+
+     \addplot3 [fill=applegreen] coordinates {  
+      (0.40,    0.60,    0.00)
+      (0.40,    0.60,    0.20)
+      (0.30,    0.70,    0.20)     
+      (0.30,    0.70,    0.00)
+}; \addlegendentry{silty clay loam}
+
+     \addplot3 coordinates {  
+      (0.15,    0.85,    0.00)
+     (0.15,    0.85,    0.15)
+     (0.30,    0.70,    0.20)  
+     (0.30,    0.70,    0.00)   
+};  \addlegendentry{clay dusty loam}
+
+     \addplot3 [fill=amber] coordinates {  
+     (0.00,    1.00,    0.0)
+     (0.00,    1.00,    0.25)
+     (0.15,    0.85,    0.15)  
+     (0.15,    0.85,    0.00)    
+     (0.00,    1.00,    0.0)
+};  \addlegendentry{thin loam}
+
+\addplot3 [fill=Cyan] coordinates {  
+     (0.30,    0.70,    0.20)
+     (0.10,    0.90,    0.40)
+      (0.10,    0.90,    0.50)
+     (0.20,    0.80,    0.60)
+      (0.30,    0.70,    0.40)
+}; \addlegendentry{loam}
+
+ \addplot3 [fill=brilliantlavender] coordinates {
+       (0.40,    0.60,    0.60)
+       (0.40,    0.60,    0.40)    
+        (0.30,    0.70,    0.40)           
+        (0.20,    0.80,    0.60)       
+        (0.20,    0.80,    0.80)
+}; \addlegendentry{sandy clay loam}
+
+     \addplot3 coordinates {  
+      (0.30,    0.70,    0.20)
+     (0.15,    0.85,    0.15)   
+     (0.00,    1.00,    0.25)
+     (0.00,    1.00,    0.50)
+};  \addlegendentry{dusty loam}
+
+    
+    \node at (axis cs:0.60,0.40,0.2) {\footnotesize{clay}};
+    
+\end{ternaryaxis} % <-- finish ternary
+\end{tikzpicture} % <-- finish sublplot 2
+	\begin{flushleft} % <--Annotate plot. Align: left.
+		\textbf{Granulometric composition of the soil}
+	\end{flushleft}% <-- finish plot annotation
+\end{document}

@@ -1,0 +1,336 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Document Setup %%%%%%%%%%%%%%%%%%
+\documentclass[10pt]{article}
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+\usepackage{CJKutf8}
+\AtBeginDvi{\input{zhwinfonts}}
+\makeatletter
+\newlength{\bibhang}
+\setlength{\bibhang}{1em}
+\newlength{\bibsep}
+ {\@listi \global\bibsep\itemsep \global\advance\bibsep by\parsep}
+
+\makeatother
+\reversemarginpar
+\usepackage{geometry}\geometry{a4paper,total={170mm,257mm},left=1.18in,right=1.18in,top=0.79in,bottom=0.79in}
+
+\setlength{\parindent}{0in}
+\usepackage{enumerate} 
+\usepackage{etaremune}
+\usepackage{calc}
+\usepackage{bbding}
+\usepackage{paralist}
+\usepackage{fancyhdr,lastpage}
+\pagestyle{fancy}
+%\pagestyle{empty} % Uncomment this to get rid of page numbers
+\fancyhf{}\renewcommand{\headrulewidth}{0pt}
+\fancyfootoffset{\marginparsep+\marginparwidth}
+\newlength{\footpageshift}
+\setlength{\footpageshift}
+          {0.5\textwidth+1.\marginparsep+0.5\marginparwidth-2in}
+\lfoot{\hspace{\footpageshift}%
+       \parbox{4in}{\, \hfill %
+                    \arabic{page} of \protect\pageref*{LastPage} % +LP
+% \arabic{page} % -LP
+                    \hfill \,}}
+\usepackage{color,hyperref}
+\usepackage{graphics}
+\usepackage{wrapfig}
+\usepackage{longtable}
+
+%%%%%%%%%%%%%%%%%%%%%%%% End Document Setup %%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Helper Commands %%%%%%%%%
+
+\newcommand{\makeheading}[1]%
+        {\hspace*{-\marginparsep minus \marginparwidth}%
+         \begin{minipage}[t]{\textwidth+\marginparwidth+\marginparsep}%
+                {\large \bfseries #1}\\[-0.15\baselineskip]%
+                 \rule{\columnwidth}{1pt}%
+         \end{minipage}}
+\renewcommand{\section}[2]%
+        {\pagebreak[2]\vspace{1.3\baselineskip}%
+         \phantomsection\addcontentsline{toc}{section}{#1}%
+         \hspace{0in}%
+         \marginpar{
+         \raggedright \scshape #1}#2}
+% An itemize-style list with lots of space between items
+\newenvironment{outerlist}[1][\enskip\textbullet]%
+        {\begin{itemize}[#1]}{\end{itemize}%
+         \vspace{-.6\baselineskip}}
+% An environment IDENTICAL to outerlist that has better pre-list spacing
+% when used as the first thing in a \section
+\newenvironment{lonelist}[1][\enskip\textbullet]%
+        {\vspace{-\baselineskip}\begin{list}{#1}{%
+        \setlength{\partopsep}{0pt}%
+        \setlength{\topsep}{0pt}}}
+        {\end{list}\vspace{-.6\baselineskip}}
+
+% An itemize-style list with little space between items
+\newenvironment{innerlist}[1][\enskip\textbullet]%
+        {\begin{compactitem}[#1]}{\end{compactitem}}
+% An environment IDENTICAL to innerlist that has better pre-list spacing
+% when used as the first thing in a \section
+\newenvironment{loneinnerlist}[1][\enskip\textbullet]%
+        {\vspace{-\baselineskip}\begin{compactitem}[#1]}
+        {\end{compactitem}\vspace{-.6\baselineskip}}
+% To add some paragraph space between lines.
+% This also tells LaTeX to preferably break a page on one of these gaps
+% if there is a needed pagebreak nearby.
+\newcommand{\blankline}{\quad\pagebreak[2]}
+% Uses hyperref to link DOI
+\newcommand\doilink[1]{\href{http://dx.doi.org/#1}{#1}}
+\newcommand\doi[1]{doi:\doilink{#1}}
+% For \url{SOME_URL}, links SOME_URL to the url SOME_URL
+\providecommand*\url[1]{\href{#1}{#1}}
+% Same as above, but pretty-prints SOME_URL in teletype fixed-width font
+\renewcommand*\url[1]{\href{#1}{\texttt{#1}}}
+
+\usepackage{tikz}
+\usetikzlibrary{chains}
+\usepackage{pgfplots}
+\usepackage{pgfmath}
+\usetikzlibrary{matrix}
+\usetikzlibrary{arrows,decorations.pathmorphing,backgrounds,positioning,fit,petri}
+\usepgfmodule{decorations}
+\usepgflibrary{decorations.shapes} 
+\usetikzlibrary[decorations.shapes] 
+\usetikzlibrary{mindmap}
+\usepgflibrary{patterns}
+\usetikzlibrary[patterns]
+\usetikzlibrary{petri}
+\usepgflibrary{plothandlers}
+\usetikzlibrary{plothandlers}
+\usepackage{pgfpages}
+\usepgflibrary{arrows}
+\usetikzlibrary{arrows}
+\usetikzlibrary{trees}
+\usetikzlibrary{topaths}
+\usetikzlibrary{positioning}
+\usetikzlibrary{fit}
+\usepgflibrary{shapes.misc}
+\usetikzlibrary{shapes.misc}
+\usetikzlibrary{spy}
+\usepgflibrary{shadings}
+\usetikzlibrary{shadings}
+\usepgfmodule{shapes}
+\usepgfplotslibrary{external}
+\usetikzlibrary{pgfplots.external}
+\usepgfplotslibrary{colorbrewer}
+\usepgfplotslibrary{patchplots}
+\usetikzlibrary{plotmarks}
+\usepackage{color} 
+ \pgfplotsset{width=15cm,height=7cm,
+    /pgfplots/colormap={spring}{rgb255=(255,0,255) rgb255=(255,255,0)}}
+\usepgfplotslibrary[statistics] % ConTEXt 
+\usetikzlibrary{pgfplots.statistics}
+\begin{document}
+\selectlanguage{russian}
+
+\begin{tikzpicture}
+\begin{axis}[minor y tick num=1,xlabel style={sloped like x axis},%<- start plot environment
+    boxplot/draw direction=y, %<- set up vertical direction of the plot
+    x axis line style={opacity=0},
+    axis x line*=bottom, %<- declare x line starting from zero (it can be varied to the necessary value)
+    axis y line=left,minor y tick num=10, %<- set up 10 minor ticks between the major ones
+    enlarge y limits, %<- here say that Y axis should a bit overstep the extremal y-values (for aesthetics)
+    ymajorgrids, tick style={color=black},ylabel={$C_{eq}$},
+    xtick={1,2,3,4,5,6,7,8,9,10,11,12,13,14,15},%<- here we declare which objects should be annotated. 
+    % Here: 15 experimental tests starting from №5802 up to №5833
+    xticklabels={№5802, №5803, №5804, №5805, №5807,№5810,№5812,№5817,№5821, №5822, №5825, №5828, №5831, №5832, №5833}, boxplot/variable width,x tick label style={rotate=45,anchor=east}]
+ \addplot+ [ %<- adding prepared boxplot #1
+        boxplot prepared={ %<- here we start filling out the columns with prepared values from csv tables. Insert values of lower and upper quartiles, median, maximal and minimal values. Visual design can be adjusted as necessary (color and type of lines)
+            lower whisker=0.167,
+            lower quartile=0.190,
+            median=0.201,
+            upper quartile=0.210,
+            upper whisker=0.222,
+ 	   box extend=1,
+	   	every box/.style={thin,draw=violet},
+    		every whisker/.style={violet,thin},
+   		 every median/.style={violet,thin},
+        },] table [row sep=\\,y index=0] { 0.107\\ 0.127\\ 0.322\\ };
+ 
+ \addplot+ [%<- adding prepared boxplot #2
+        boxplot prepared={
+            lower whisker=0.074,
+            lower quartile=0.080,
+            median=0.087,
+            upper quartile=0.096,
+            upper whisker=0.101,
+   	every box/.style={thin,draw=violet},
+    		every whisker/.style={violet,thin},
+   		 every median/.style={violet,thin},
+        },
+    ]  table [row sep=\\,y index=0] { 0.027\\ 0.127\\ 0.202\\ }; %<- other box plots were added using scheme for the first two box plots as shown above.
+ 
+    \addplot+ [
+        boxplot prepared={
+            lower whisker=0.056,
+            lower quartile=0.062,
+            median=0.079,
+            upper quartile=0.083,
+            upper whisker=0.095,
+   	every box/.style={thin,draw=violet},
+    		every whisker/.style={violet,thin},
+   		 every median/.style={violet,thin},
+        },] table [row sep=\\,y index=0] { 0.026\\ 0.127\\ 0.195\\ };
+ 
+ \addplot+ [
+        boxplot prepared={
+            lower whisker=0.251,
+            lower quartile=0.262,
+            median=0.284,
+            upper quartile=0.290,
+            upper whisker=0.296,
+   	every box/.style={thin,draw=violet},
+    		every whisker/.style={violet,thin},
+   		 every median/.style={violet,thin},
+        },  ]   coordinates {};
+ 
+  \addplot+ [
+        boxplot prepared={
+            lower whisker=0.092,
+            lower quartile=0.098,
+            median=0.128,
+            upper quartile=0.137,
+            upper whisker=0.153,
+    	every box/.style={thin,draw=violet},
+    		every whisker/.style={violet,thin},
+   		 every median/.style={violet,thin},
+        }, ]table [row sep=\\,y index=0] { 0.032\\ 0.207\\ 0.267\\ };
+  
+   \addplot+ [
+        boxplot prepared={
+            lower whisker=0.068,
+            lower quartile=0.088,
+            median=0.102,
+            upper quartile=0.117,
+            upper whisker=0.123,  	
+   every box/.style={solid,thin,draw=violet},
+   every whisker/.style={solid,violet,thin},
+   every median/.style={solid,violet,thin},  },
+    ]  coordinates {};
+   
+     \addplot+ [
+        boxplot prepared={
+            lower whisker=0.137,
+            lower quartile=0.158,
+            median=0.188,
+            upper quartile=0.225,
+            upper whisker=0.262,
+      	every box/.style={solid,thin,draw=violet},
+    	every whisker/.style={solid,violet,thin},
+   	every median/.style={solid,violet,thin}, },
+    ] table [row sep=\\,y index=0] { 0.108\\ 0.284\\ 0.302\\ };
+     
+      \addplot+ [
+        boxplot prepared={
+            lower whisker=0.059,
+            lower quartile=0.078,
+            median=0.083,
+            upper quartile=0.089,
+            upper whisker=0.098,every box/.style={solid,thin,draw=violet},
+    	every whisker/.style={solid,violet,thin},
+   	every median/.style={solid,violet,thin},   },
+    ] table [row sep=\\,y index=0] { 0.029\\ 0.120\\ 0.147\\ };
+      
+        \addplot+ [
+        boxplot prepared={
+            lower whisker=0.103,
+            lower quartile=0.118,
+            median=0.124,
+            upper quartile=0.139,
+            upper whisker=0.151,
+           	every box/.style={solid,thin,draw=violet},
+    		every whisker/.style={solid,violet,thin},
+   		 every median/.style={solid,violet,thin},
+        },
+    ]  coordinates {};
+        
+              \addplot+ [
+        boxplot prepared={
+            lower whisker=0.088,
+            lower quartile=0.108,
+            median=0.117,
+            upper quartile=0.134,
+            upper whisker=0.152,
+                 	every box/.style={solid,thin,draw=violet},
+    		every whisker/.style={solid,violet,thin},
+   		 every median/.style={solid,violet,thin},
+        },
+    ] table [row sep=\\,y index=0] { 0.038\\ 0.207\\ 0.232\\ };
+              
+               \addplot+ [
+        boxplot prepared={
+            lower whisker=0.082,
+            lower quartile=0.098,
+            median=0.120,
+            upper quartile=0.139,
+            upper whisker=0.163,
+                  	every box/.style={solid,thin,draw=violet},
+    		every whisker/.style={solid,violet,thin},
+   		 every median/.style={solid,violet,thin},
+        },
+    ] table [row sep=\\,y index=0] { 0.048\\ 0.213\\ 0.243\\ };
+               
+                \addplot+ [
+        boxplot prepared={
+            lower whisker=0.050,
+            lower quartile=0.062,
+            median=0.080,
+            upper quartile=0.094,
+            upper whisker=0.102,
+                   	every box/.style={solid,thin,draw=violet},
+    		every whisker/.style={solid,violet,thin},
+   		 every median/.style={violet,thin},
+        },
+    ] table [row sep=\\,y index=0] { 0.010\\ 0.172\\ 0.202\\ };
+                
+              \addplot+ [
+        boxplot prepared={
+            lower whisker=0.057,
+            lower quartile=0.072,
+            median=0.105,
+            upper quartile=0.144,
+            upper whisker=0.205,
+                 every box/.style={thin,draw=violet},
+    		every whisker/.style={solid,violet,thin},
+   		 every median/.style={solid,violet,thin},  },
+    ] table [row sep=\\,y index=0] { 0.027\\ 0.227\\ 0.255\\ };
+              
+                 \addplot+ [
+        boxplot prepared={
+            lower whisker=0.068,
+            lower quartile=0.075,
+            median=0.077,
+            upper quartile=0.081,
+            upper whisker=0.084,
+                       every box/.style={thin,draw=violet},
+    		every whisker/.style={violet,thin},
+   		 every median/.style={violet,thin},
+       },
+    ] table [row sep=\\,y index=0] { 0.038\\ 0.127\\ 0.184\\ };
+                 
+                \addplot+ [
+        boxplot prepared={
+            lower whisker=0.071,
+            lower quartile=0.103,
+            median=0.157,
+            upper quartile=0.171,
+            upper whisker=0.193,
+                   	every box/.style={thin,draw=violet},
+    		every whisker/.style={violet,thin},
+   		 every median/.style={violet,thin},
+        },
+    ]  table [row sep=\\,y index=0] { 0.028\\ 0.212\\ 0.234\\ };
+
+\end{axis}
+\end{tikzpicture}
+
+
+%	\begin{flushleft}
+%		\selectlanguage{russian}\textbf{Рис. 4. Диаграмма одномерного распределения статистических вероятностей 8-часового эквивалентного сцепления ($C_{eq}$) образцов грунтов по данным серии из 15 испытаний}\\\vspace{6pt}
+%		\textbf{Fig. 4. Statistical box plot of the variations of the one-dimensional distributions for the 8-hours equivalent cohesion of the soil samples in 15 experimental sets ($C_{eq}$)}
+%	\end{flushleft}
+\end{document}

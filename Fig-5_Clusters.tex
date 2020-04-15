@@ -1,0 +1,425 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Document Setup %%%%%%%%%%%%%%%%%%
+\documentclass[10pt]{article}
+\usepackage[T2A,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+\usepackage{CJKutf8}
+\AtBeginDvi{\input{zhwinfonts}}
+%\usepackage{polyglossia}
+\makeatletter
+\newlength{\bibhang}
+\setlength{\bibhang}{1em}
+\newlength{\bibsep}
+ {\@listi \global\bibsep\itemsep \global\advance\bibsep by\parsep}
+%\newenvironment{bibsection}%
+ %       {\vspace{-\baselineskip}\begin{list}{}{%
+   %    \setlength{\leftmargin}{\bibhang}%
+     %  \setlength{\itemindent}{-\leftmargin}%
+       %\setlength{\itemsep}{\bibsep}%
+       %\setlength{\parsep}{\z@}%
+        %\setlength{\partopsep}{0pt}%
+        %\setlength{\topsep}{0pt}}}
+        %{\end{list}\vspace{-.6\baselineskip}}
+\makeatother
+\reversemarginpar
+\usepackage{geometry}\geometry{a4paper,total={170mm,257mm},left=1.18in,right=1.18in,top=0.79in,bottom=0.79in}
+%\usepackage[paper=letterpaper,
+           %\includefoot, % Uncomment to put page number above margin
+   %         marginparwidth=0.6in, % Length of section titles
+         %   marginparsep=0.05in, % Space between titles and text
+      %      margin=1.18in, % 1 inch margins
+            %includemp]{geometry}
+%\usepackage{eurosans}
+\setlength{\parindent}{0in}
+\usepackage{enumerate} 
+\usepackage{etaremune}
+\usepackage{calc}
+\usepackage{bbding}
+\usepackage{paralist}
+\usepackage{fancyhdr,lastpage}
+\pagestyle{fancy}
+%\pagestyle{empty} % Uncomment this to get rid of page numbers
+\fancyhf{}\renewcommand{\headrulewidth}{0pt}
+\fancyfootoffset{\marginparsep+\marginparwidth}
+\newlength{\footpageshift}
+\setlength{\footpageshift}
+          {0.5\textwidth+1.\marginparsep+0.5\marginparwidth-2in}
+\lfoot{\hspace{\footpageshift}%
+       \parbox{4in}{\, \hfill %
+                    \arabic{page} of \protect\pageref*{LastPage} % +LP
+% \arabic{page} % -LP
+                    \hfill \,}}
+\usepackage{color,hyperref}
+\usepackage{graphics}
+\usepackage{wrapfig}
+\usepackage{longtable}
+
+\usepackage[usenames,dvipsnames,x11names,svgnames]{xcolor}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.3}
+\definecolor{mygreen}{RGB}{44,204,148}
+\definecolor{darkgreen}{RGB}{13,107,27}
+\definecolor{lightgreen}{RGB}{0,170,37}
+\definecolor{provinces}{RGB}{11,100,132}
+\definecolor{mypurple}{RGB}{77,24,137}
+\definecolor{haiyan}{RGB}{8,150,178}
+\definecolor{anticred}{RGB}{165,62,11}
+\hypersetup{colorlinks,breaklinks,
+            linkcolor=darkblue,urlcolor=darkblue,
+            anchorcolor=darkblue,citecolor=darkblue}
+%%%%%%%%%%%%%%%%%%%%%%%% End Document Setup %%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Helper Commands %%%%%%%%%
+
+\newcommand{\makeheading}[1]%
+        {\hspace*{-\marginparsep minus \marginparwidth}%
+         \begin{minipage}[t]{\textwidth+\marginparwidth+\marginparsep}%
+                {\large \bfseries #1}\\[-0.15\baselineskip]%
+                 \rule{\columnwidth}{1pt}%
+         \end{minipage}}
+\renewcommand{\section}[2]%
+        {\pagebreak[2]\vspace{1.3\baselineskip}%
+         \phantomsection\addcontentsline{toc}{section}{#1}%
+         \hspace{0in}%
+         \marginpar{
+         \raggedright \scshape #1}#2}
+% An itemize-style list with lots of space between items
+\newenvironment{outerlist}[1][\enskip\textbullet]%
+        {\begin{itemize}[#1]}{\end{itemize}%
+         \vspace{-.6\baselineskip}}
+% An environment IDENTICAL to outerlist that has better pre-list spacing
+% when used as the first thing in a \section
+\newenvironment{lonelist}[1][\enskip\textbullet]%
+        {\vspace{-\baselineskip}\begin{list}{#1}{%
+        \setlength{\partopsep}{0pt}%
+        \setlength{\topsep}{0pt}}}
+        {\end{list}\vspace{-.6\baselineskip}}
+
+% An itemize-style list with little space between items
+\newenvironment{innerlist}[1][\enskip\textbullet]%
+        {\begin{compactitem}[#1]}{\end{compactitem}}
+% An environment IDENTICAL to innerlist that has better pre-list spacing
+% when used as the first thing in a \section
+\newenvironment{loneinnerlist}[1][\enskip\textbullet]%
+        {\vspace{-\baselineskip}\begin{compactitem}[#1]}
+        {\end{compactitem}\vspace{-.6\baselineskip}}
+% To add some paragraph space between lines.
+% This also tells LaTeX to preferably break a page on one of these gaps
+% if there is a needed pagebreak nearby.
+\newcommand{\blankline}{\quad\pagebreak[2]}
+% Uses hyperref to link DOI
+\newcommand\doilink[1]{\href{http://dx.doi.org/#1}{#1}}
+\newcommand\doi[1]{doi:\doilink{#1}}
+% For \url{SOME_URL}, links SOME_URL to the url SOME_URL
+\providecommand*\url[1]{\href{#1}{#1}}
+% Same as above, but pretty-prints SOME_URL in teletype fixed-width font
+\renewcommand*\url[1]{\href{#1}{\texttt{#1}}}
+
+\usepackage{tikz}
+\usetikzlibrary{chains}
+\usepackage{pgfplots}
+\usepackage{pgfmath}
+\usetikzlibrary{matrix}
+\usetikzlibrary{arrows,decorations.pathmorphing,backgrounds,positioning,fit,petri}
+\usepgfmodule{decorations}
+\usepgflibrary{decorations.shapes} 
+\usetikzlibrary[decorations.shapes] 
+\usetikzlibrary{mindmap}
+\usepgflibrary{patterns}
+\usetikzlibrary[patterns]
+\usetikzlibrary{petri}
+\usepgflibrary{plothandlers}
+\usetikzlibrary{plothandlers}
+\usepackage{pgfpages}
+\usepgflibrary{arrows}
+\usetikzlibrary{arrows}
+\usetikzlibrary{trees}
+\usetikzlibrary{topaths}
+\usetikzlibrary{positioning}
+\usetikzlibrary{fit}
+\usepgflibrary{shapes.misc}
+\usetikzlibrary{shapes.misc}
+\usetikzlibrary{spy}
+\usepgflibrary{shadings}
+\usetikzlibrary{shadings}
+\usepgfmodule{shapes}
+\usepgfplotslibrary{external}
+\usetikzlibrary{pgfplots.external}
+\usepgfplotslibrary{colorbrewer}
+\usepgfplotslibrary{patchplots}
+\usetikzlibrary{plotmarks}
+\usepackage{color} 
+\usepackage{xcolor} 
+%\pgfpagesuselayout{resize to}[a4paper,border shrink=20mm]
+\pgfplotsset{colormap={cool}{rgb255(0cm)=(255,255,255); rgb255(1cm)=(0,128,255); rgb255(2cm)=(255,0,255)}}
+  \pgfplotsset{colormap={violet}{rgb255=(25,25,122) color=(white) rgb255=(238,140,238)}}
+  \pgfplotsset{
+    colormap={bluered}{rgb255(0cm)=(0,0,180); rgb255(1cm)=(0,255,255); rgb255(2cm)=(100,255,0);
+rgb255(3cm)=(255,255,0); rgb255(4cm)=(255,0,0); rgb255(5cm)=(128,0,0)}}
+ \pgfplotsset{/pgfplots/colormap={winter}{rgb255=(0,0,255) rgb255=(0,255,128)}}
+ \pgfplotsset{
+    /pgfplots/colormap={spring}{rgb255=(255,0,255) rgb255=(255,255,0)}
+}
+
+
+\begin{document}
+\selectlanguage{russian}
+
+\begin{tikzpicture} %<- begin plot environment
+\begin{axis}[
+	title=Clusters from 15 experiment series,xlabel={\footnotesize{Humidity, \%}},
+	ylabel={\tiny{Compressive strength, $C_{eq}$ (8h), MPa}},
+	minor x tick num=5,minor y tick num=10,grid=major] %<- begin figure environment, parameters are given in square brackets
+\addplot[ %<- parameters are given in square brackets
+ 	 scatter, %<- plot type - 'scatter'
+    	only marks, %<- indicate that plot is made by dots, without connecting lines
+    	point meta=explicit symbolic,
+     	mark size=5pt,
+    	scatter/classes={
+		a={mark=+,DeepPink1}, 
+		b={mark=o,DarkOrchid2}, 
+		c={mark=x,DarkOrange3},
+		d={mark=x,darkgreen},
+		e={mark=Mercedes star,Green1},
+		f={mark=star,SeaGreen2},
+		g={mark=10-pointed star,Red2},
+		h={mark=-,SpringGreen1},
+		j={mark=10-pointed star,red},
+		k={mark=asterisk,Purple3},
+		l={mark=+,Magenta1},
+		m={mark=-,OrangeRed1},
+		n={mark=o,RoyalBlue1},
+		o={mark=10-pointed star,Coral2},
+		p={mark=-,Chartreuse2},
+		r={mark=pentagon,DodgerBlue1} %<- indicate various types of points (design, color, size)
+	}]
+table [meta=class] {
+	x  	y  		class
+	20.6  0.222 	a
+	20.6  0.211 	a
+	20.6  0.217 	a
+	20.6  0.219	a	
+	20.6  0.172 	a
+	20.6  0.167 	a
+	34.1  0.074 	b
+	34.1  0.101 	b	
+	34.1  0.092 	b
+	34.1	0.088  	b	
+	34.1	0.092	b
+	34.1	0.075	b
+	34.0	0.060	c	
+	34.0	0.095	c
+	34.0	0.090	c	 
+	34.0	0.089	c
+	34.0	0.056	c
+	34.0	0.083	c
+	23.4	0.274	d
+	23.4	0.296	d
+	23.4	0.293	d	
+	23.4	0.251	d
+	23.4	0.294	d
+	23.4	0.295	d
+	25.0	0.107	e
+	25.0	0.092	e
+	25.0	0.153	e	
+	25.0	0.138	e
+	25.0 0.127	e
+	25.0	0.151	e
+	48.2	0.068	f
+	48.2	0.123	f	
+	48.2	0.094	f
+	48.2	0.113	f
+	48.2	0.123	f
+	48.2	0.089	f
+	26.6	0.184	g	
+	26.6	0.162	g	
+	26.6	0.162	g
+	26.6	0.220	g
+	26.6	0.137	g
+	26.6	0.262	g
+	34.6	0.098	h
+	34.6	0.081	h
+	34.6	0.098	h
+	34.6	0.077	h
+	34.6	0.059	h
+	34.6	0.085	h
+	35.3	0.151	j
+	35.3	0.121	j
+	35.3	0.129	j
+	35.3	0.103	j
+	35.3	0.110	j
+	35.3	0.131	j
+	29.4	0.132	k
+	29.4	0.152	k
+	29.4	0.088	k
+	29.4	0.118	k
+	29.4	0.099	k
+	29.4	0.115	k
+	49.3	0.163	l
+	49.3	0.119	l
+	49.3	0.133	l
+	49.3	0.111	l
+	49.3	0.112	l
+	49.3	0.082	l
+	34.5	0.082	m
+	34.5 0.100	m
+	34.5	0.061	m	
+	34.5	0.083	m	
+	34.5	0.102	m
+	34.5	0.050	m
+	47.7 0.083	n
+	47.7 0.205	n
+	47.7 0.090	n
+	47.7 0.057	n
+	47.7 0.080	n
+	47.7 0.117		n
+	22.5 0.083	o
+	22.5 0.205	o
+	22.5 0.090	o
+	22.5 0.057	o
+	22.5 0.080	o
+	22.5 0.117		o
+	22.5 0.075	p
+	22.5 0.079	p
+	22.5 0.076	p
+	22.5 0.081	p
+	22.5 0.084	p
+	22.5 0.068	p
+	23.5 0.071	r
+	23.5 0.170	r
+	23.5 0.193	r
+	23.5 0.182	r
+	23.5 0.178	r
+	23.5 0.146	r
+};
+\end{axis}
+\end{tikzpicture}
+\begin{tikzpicture}
+\begin{axis}[title=Clusters from 15 experiment series,xlabel={\footnotesize{Density, g / cm$^{3}$ }},ylabel={\footnotesize{$C_{eq}$ (8h.), MPa}},minor x tick num=5,minor y tick num=10,grid=major]
+\addplot[
+ 	 scatter,
+    	only marks,
+    	point meta=explicit symbolic,
+     	mark size=5pt,
+    	scatter/classes={
+		a={mark=+,magenta}, 
+		b={mark=o,lime}, 
+		c={mark=x,violet},
+		d={mark=x,yellow},
+		e={mark=Mercedes star,YellowOrange},
+		f={mark=star,Maroon},
+		g={mark=10-pointed star,ProcessBlue},
+		h={mark=-,green},
+		j={mark=10-pointed star,teal},
+		k={mark=asterisk,orange},
+		l={mark=+,ProcessBlue},
+		m={mark=-,Yellow},
+		n={mark=o,Cyan},
+		o={mark=10-pointed star,LightSlateBlue},
+		p={mark=-,PineGreen},
+		r={mark=pentagon,Olive}
+	}]
+table [meta=class] {
+	x  	y  		class
+	1.99  0.222 	a
+	1.99  0.211 	a
+	1.99  0.217 	a
+	1.99  0.219	a	
+	1.99  0.172 	a
+	1.99  0.167 	a
+	1.80  0.074 	b
+	1.80  0.101 	b	
+	1.80  0.092 	b
+	1.80	0.088  	b	
+	1.80	0.092	b
+	1.80	0.075	b
+	1.75	0.060	c	
+	1.75	0.095	c
+	1.75	0.090	c	 
+	1.75	0.089	c
+	1.75	0.056	c
+	1.75	0.083	c
+	1.91	0.274	d
+	1.91	0.296	d
+	1.91	0.293	d	
+	1.91	0.251	d
+	1.91	0.294	d
+	1.91	0.295	d
+	1.86	0.107	e
+	1.86	0.092	e
+	1.86	0.153	e	
+	1.86	0.138	e
+	1.86 0.127	e
+	1.86	0.151	e
+	1.73	0.068	f
+	1.73	0.123	f	
+	1.73	0.094	f
+	1.73	0.113	f
+	1.73	0.123	f
+	1.73	0.089	f
+	1.87	0.184	g	
+	1.87	0.162	g	
+	1.87	0.162	g
+	1.87	0.220	g
+	1.87	0.137	g
+	1.87	0.262	g
+	1.77	0.098	h
+	1.77	0.081	h
+	1.77	0.098	h
+	1.77	0.077	h
+	1.77	0.059	h
+	1.77	0.085	h
+	1.61	0.151	j
+	1.61	0.121	j
+	1.61	0.129	j
+	1.61	0.103	j
+	1.61	0.110	j
+	1.61	0.131	j
+	1.85	0.132	k
+	1.85	0.152	k
+	1.85	0.088	k
+	1.85	0.118	k
+	1.85	0.099	k
+	1.85	0.115	k
+	1.65	0.163	l
+	1.65	0.119	l
+	1.65	0.133	l
+	1.65	0.111	l
+	1.65	0.112	l
+	1.65	0.082	l
+	1.69	0.082	m
+	1.69 0.100	m
+	1.69	0.061	m	
+	1.69	0.083	m	
+	1.69	0.102	m
+	1.69	0.050	m
+	1.51 0.083	n
+	1.51 0.205	n
+	1.51 0.090	n
+	1.51 0.057	n
+	1.51 0.080	n
+	1.51 0.117		n
+	1.51 0.083	o
+	1.51 0.205	o
+	1.51 0.090	o
+	1.51 0.057	o
+	1.51 0.080	o
+	1.51 0.117		o
+	1.89 0.075	p
+	1.89 0.079	p
+	1.89 0.076	p
+	1.89 0.081	p
+	1.89 0.084	p
+	1.89 0.068	p
+	1.60 0.071	r
+	1.60 0.170	r
+	1.60 0.193	r
+	1.60 0.182	r
+	1.60 0.178	r
+	1.60 0.146	r
+};
+\end{axis}
+\end{tikzpicture}
+%	\begin{flushleft}
+%		\selectlanguage{russian}\textbf{Рис. 3. График рассеяния величины восьмичасового эквивалентного сцепления грунтов с изменением влажности (слева) и плотности (справа) образцов грунтов}\\\vspace{6pt}
+%		\textbf{Fig. 3. Scatter plot of the variations of the 8-hours equivalent cohesion of soil samples under changed humidity (left) and density (right) conditions}
+%	\end{flushleft}
+\end{document}
