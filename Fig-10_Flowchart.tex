@@ -1,0 +1,110 @@
+\documentclass{article} %  say
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+\usepackage[T2A]{fontenc}
+\usepackage{CJKutf8}
+
+
+\usepackage{tikz}
+\usetikzlibrary{chains}
+\usepackage{pgfplots}
+\usepackage{pgfmath}
+\usetikzlibrary{matrix}
+\usepackage{color}
+%\usepackage[usenames,x11names,dvipsnames]{xcolor}
+\usetikzlibrary{arrows,decorations.pathmorphing,backgrounds,positioning,fit,petri}
+\usepgfmodule{decorations}
+\usepgflibrary{decorations.shapes} 
+\usetikzlibrary[decorations.shapes] 
+\usetikzlibrary{mindmap}
+\usepgflibrary{patterns}
+\usetikzlibrary[patterns]
+\usetikzlibrary{petri}
+\usepgflibrary{plothandlers}
+\usetikzlibrary{plothandlers}
+\usepackage{pgfpages}
+\usepgflibrary{arrows}
+\usetikzlibrary{arrows}
+\usetikzlibrary{trees}
+\usetikzlibrary{topaths}
+\usetikzlibrary{positioning}
+\usetikzlibrary{fit}
+\usepgflibrary{shapes.misc}
+\usetikzlibrary{shapes.misc}
+\usetikzlibrary{spy}
+\usepgflibrary{shadings}
+\usetikzlibrary{shadings}
+\usepgfmodule{shapes}
+\usepgfplotslibrary{external}
+\usetikzlibrary{pgfplots.external}
+\usepgfplotslibrary{colorbrewer}
+\usepgfplotslibrary{patchplots}
+\usetikzlibrary{plotmarks}
+
+\definecolor{babypink}{rgb}{0.96, 0.76, 0.76}
+\definecolor{celadon}{rgb}{0.67, 0.88, 0.69}
+\definecolor{chromeyellow}{rgb}{1.0, 0.65, 0.0}
+\definecolor{cream}{rgb}{1.0, 0.99, 0.82}
+\definecolor{darksalmon}{rgb}{0.91, 0.59, 0.48}
+\definecolor{lavenderblue}{rgb}{0.8, 0.8, 1.0}
+ \definecolor{lightapricot}{rgb}{0.99, 0.84, 0.69}
+% \definecolor{lightgreen}{rgb}{0.56, 0.93, 0.56}
+ \definecolor{color4bg}{HTML}{e95464}
+% \definecolor{lightpink}{rgb}{1.0, 0.71, 0.76}
+  \definecolor{color5bg}{HTML}{2ca9e1}
+% \definecolor{mauve}{rgb}{0.88, 0.69, 1.0}
+%c7dc68
+ \definecolor{color1bg}{HTML}{c3d825}
+% \definecolor{outrageousorange}{rgb}{1.0, 0.43, 0.29}
+  \definecolor{color2bg}{HTML}{f39800}
+% \definecolor{tangerineyellow}{rgb}{1.0, 0.8, 0.0}
+%ffec47
+   \definecolor{color3bg}{HTML}{ffd900}
+ \definecolor{turquoiseblue}{rgb}{0.0, 1.0, 0.94}
+
+
+\pgfpagesuselayout{resize to}[a4paper,border shrink=20mm]
+%\pgfpagesuselayout{2 on 1}[a4paper,border shrink=5mm]
+
+\begin{document}
+%\selectlanguage{russian}{
+\begin{tikzpicture}
+  \path[mindmap,concept color=lavenderblue,text=black]
+    node[concept] {Results:\\ Frozen Soils Deformation Experiment}  [clockwise from=0]
+       child[concept color=turquoiseblue] { node[concept] {Conclusions} 
+          [clockwise from=60]
+              	child { node[concept] {Comparative analysis of the soils properties } }
+	        	child { node[concept] {Modelling} }
+      		child { node[concept] {Data back-up} }  }  
+      child[concept color=color3bg] {
+      node[concept] {Data analysis}
+      [clockwise from=0]
+  	    child { node[concept] {Numerical calculations} }
+   	   child { node[concept] {Plotting graphs} }
+   	   child { node[concept] {Statistical analysis} } } 
+    child[concept color=color2bg] {
+      node[concept] {Experiment}
+      [clockwise from=-60]
+	      child { node[concept] {Measurements} } 
+	      child { node[concept] {Sample loading, testing} }
+ 	     child { node[concept] {Sample and instrument preparation} } }
+    child[concept color=color1bg] { 
+    node[concept] {Methods}
+      [clockwise from=-120]
+      child { node[concept] {Uniaxial compression} }
+      child { node[concept] {Compression strength} }
+      	child { node[concept] {Ball stamp} }  }
+       child[concept color=color4bg] { node[concept] {Data pre-processing} 
+          [clockwise from=-180]
+              	child { node[concept] {Approaches} }
+	         child { node[concept] {Data sampling} }
+      		child { node[concept] {Selecting algorithms}  }  }    
+     child[concept color=color5bg] { node[concept] {Data collection}
+          [clockwise from=-240]
+      		child { node[concept] {Fieldwork, Yamal} }
+      		child { node[concept] {Research problem definition} }
+      		child { node[concept] {Research actuality} } };
+\end{tikzpicture}%}
+ 
+ 
+\end{document}
